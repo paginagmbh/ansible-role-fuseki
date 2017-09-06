@@ -40,6 +40,7 @@
   template:
     src: "fuseki-defaults.j2"
     dest: "/etc/default/fuseki"
+  notify: restart fuseki
 
 - name: Ensure that $FUSEKI_BASE/configuration exists.
   file:

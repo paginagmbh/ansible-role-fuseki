@@ -13,7 +13,7 @@
     fuseki:serviceUpdate "update" ;
     fuseki:serviceUpload "upload" ;
     fuseki:serviceReadWriteGraphStore "data" ;
-{% else if item.read_graph_store|default(true, true) %}
+{% elif item.read_graph_store|default(true, true) %}
     fuseki:serviceReadGraphStore "data" ;
 {% endif %}
     .
