@@ -31,13 +31,6 @@
     state: absent
   with_items: "{{ fuseki_components }}"
 
-- name: Create symlinks to Fuseki and Jena installs.
-  file:
-    src: "{{ fuseki_install_dir }}/{{ item }}-{{fuseki_version }}"
-    dest: "{{ fuseki_install_dir }}/{{ item }}"
-    state: link
-  with_items: "{{ fuseki_components }}"
-
 - name: Configure environment ($PATH).
   template:
     src: "env.sh.j2"
