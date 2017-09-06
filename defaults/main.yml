@@ -1,0 +1,25 @@
+---
+fuseki_components:
+    - "apache-jena"
+    - "apache-jena-fuseki"
+
+fuseki_workspace: /root
+fuseki_create_user: true
+
+fuseki_user: fuseki
+
+fuseki_version: "3.4.0"
+fuseki_mirror: "https://archive.apache.org/dist"
+
+fuseki_install_dir: "/opt"
+fuseki_base: "/var/fuseki"
+fuseki_home: "/opt/apache-jena-fuseki-{{ fuseki_version }}"
+
+fuseki_java_opts: ""
+
+fuseki_service_manage: true
+fuseki_service_state: started
+
+fuseki_restart_handler_enabled: true
+
+fuseki_configurations: []

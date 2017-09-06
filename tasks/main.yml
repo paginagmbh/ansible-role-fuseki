@@ -1,0 +1,82 @@
+---
+- include: user.yml
+  when: fuseki_create_user
+
+- name: Check if Fuseki and Jena have been installed already.
+  stat:
+    path: "{{ fuseki_install_dir }}/{{ item }}-{{ fuseki_version }}"
+  with_items: "{{ fuseki_components }}"
+  register: fuseki_install_status
+
+- name: Download Fuseki and Jena.
+  get_url:
+    url: "{{ fuseki_mirror }}/jena/binaries/{{ item.item }}-{{ fuseki_version }}.tar.gz"
+    dest: "{{ fuseki_workspace }}/{{ item.item }}-{{fuseki_version }}.tar.gz"
+    force: no
+  with_items: "{{ fuseki_install_status.results }}"
+  when: "{{ item.stat.isdir is not defined }}"
+  register: fuseki_download_status
+
+- name: Expand Fuseki and Jena.
+  unarchive:
+    src: "{{ fuseki_workspace }}/{{ item.item.item }}-{{fuseki_version }}.tar.gz"
+    dest: "{{ fuseki_install_dir }}"
+    copy: no
+  with_items: "{{ fuseki_download_status.results }}"
+  when: "{{ item.changed == true }}"
+
+- name: Delete Fuseki and Jena downloads.
+  file:
+    path: "{{ fuseki_workspace }}/{{ item }}-{{fuseki_version }}.tar.gz"
+    state: absent
+  with_items: "{{ fuseki_components }}"
+
+- name: Create symlinks to Fuseki and Jena installs.
+  file:
+    src: "{{ fuseki_install_dir }}/{{ item }}-{{fuseki_version }}"
+    dest: "{{ fuseki_install_dir }}/{{ item }}"
+    state: link
+  with_items: "{{ fuseki_components }}"
+
+- name: Configure environment ($PATH).
+  template:
+    src: "env.sh.j2"
+    dest: "/etc/profile.d/fuseki.sh"
+
+- name: Configure Fuseki defaults.
+  template:
+    src: "fuseki-defaults.j2"
+    dest: "/etc/default/fuseki"
+
+- name: Ensure that $FUSEKI_BASE/configuration exists.
+  file:
+    path: "{{ fuseki_base }}/configuration"
+    owner: "{{ fuseki_user }}"
+    group: "{{ fuseki_user }}"
+    mode: 0770
+    state: directory
+    recurse: True
+
+- name: Configure Fuseki.
+  template:
+    src: "fuseki-config.ttl.j2"
+    dest: "{{ fuseki_base }}/configuration/{{ item.name }}.ttl"
+    owner: "{{ fuseki_user }}"
+    group: "{{ fuseki_user }}"
+    mode: 0660
+  with_items: "{{ fuseki_configurations }}"
+
+- name: Copy Fuseki systemd unit file into place.
+  template:
+    src: fuseki.unit.j2
+    dest: /etc/systemd/system/fuseki.service
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Ensure Fuseki is started and enabled on boot if configured.
+  service:
+    name: "fuseki"
+    state: "{{ fuseki_service_state }}"
+    enabled: yes
+  when: fuseki_service_manage

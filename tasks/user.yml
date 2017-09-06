@@ -1,0 +1,9 @@
+---
+- name: Ensure fuseki_user group exists.
+  group: "name={{ fuseki_user }} state=present"
+
+- name: Ensure fuseki_user exists.
+  user:
+    name: "{{ fuseki_user }}"
+    state: present
+    group: "{{ fuseki_user }}"
