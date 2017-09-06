@@ -58,6 +58,7 @@
     group: "{{ fuseki_user }}"
     mode: 0660
   with_items: "{{ fuseki_configurations }}"
+  notify: restart fuseki
 
 - name: Copy Fuseki systemd unit file into place.
   template:

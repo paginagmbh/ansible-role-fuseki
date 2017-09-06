@@ -6,14 +6,21 @@
 @prefix :        <#> .
 
 <#service> rdf:type fuseki:Service ;
-    fuseki:name                     "/{{ item.name }}" ;
-    fuseki:serviceQuery             "query" ;
-    fuseki:serviceQuery             "sparql" ;
-    fuseki:serviceReadGraphStore    "data" ;
-    fuseki:dataset           <#dataset> ;
+    fuseki:name "{{ item.name }}" ;
+    fuseki:serviceQuery "query" ;
+    fuseki:dataset <#dataset> ;
+{% if item.read_write|default(false, true) %}
+    fuseki:serviceUpdate "update" ;
+    fuseki:serviceUpload "upload" ;
+    fuseki:serviceReadWriteGraphStore "data" ;
+{% else if item.read_graph_store|default(true, true) %}
+    fuseki:serviceReadGraphStore "data" ;
+{% endif %}
     .
 
 <#dataset> rdf:type tdb:DatasetTDB ;
     tdb:location "{{ fuseki_base }}/databases/{{ item.name }}" ;
+{% if item.union_default_graph|default(true, true) %}
     tdb:unionDefaultGraph true ;
+{% endif %}
     .
