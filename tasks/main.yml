@@ -42,6 +42,14 @@
     dest: "/etc/default/fuseki"
   notify: restart fuseki
 
+- name: Ensure that $FUSEKI_BASE exists.
+  file:
+    path: "{{ fuseki_base }}"
+    owner: "{{ fuseki_user }}"
+    group: "{{ fuseki_user }}"
+    mode: 0770
+    state: directory
+
 - name: Ensure that $FUSEKI_BASE/configuration exists.
   file:
     path: "{{ fuseki_base }}/configuration"
@@ -49,7 +57,6 @@
     group: "{{ fuseki_user }}"
     mode: 0770
     state: directory
-    recurse: True
 
 - name: Configure Fuseki.
   template:
