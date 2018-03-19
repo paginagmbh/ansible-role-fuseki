@@ -1,5 +1,16 @@
 ---
-- include: user.yml
+- name: Ensure fuseki_user group exists.
+  group:
+    name: "{{ fuseki_user }}"
+    state: present
+  when: fuseki_create_user
+
+- name: Ensure fuseki_user exists.
+  user:
+    name: "{{ fuseki_user }}"
+    group: "{{ fuseki_user }}"
+    shell: "/bin/bash"
+    state: present
   when: fuseki_create_user
 
 - name: Check if Fuseki and Jena have been installed already.

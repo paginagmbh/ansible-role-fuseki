@@ -8,7 +8,7 @@ fuseki_create_user: true
 
 fuseki_user: fuseki
 
-fuseki_version: "3.4.0"
+fuseki_version: "3.6.0"
 fuseki_mirror: "https://archive.apache.org/dist"
 
 fuseki_install_dir: "/opt"
@@ -19,7 +19,5 @@ fuseki_java_opts: ""
 
 fuseki_service_manage: true
 fuseki_service_state: started
-
-fuseki_restart_handler_enabled: true
 
 fuseki_configurations: []

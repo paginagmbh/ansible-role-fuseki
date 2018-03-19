@@ -3,4 +3,3 @@
   service:
     name: "fuseki"
     state: restarted
-  when: fuseki_restart_handler_enabled
