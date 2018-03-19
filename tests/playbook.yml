@@ -1,0 +1,13 @@
+---
+- hosts: default
+  gather_facts: False
+  pre_tasks:
+    - raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      register: output
+      changed_when: output.stdout != ""
+    - setup: # aka gather_facts
+  roles:
+    - role: geerlingguy.java
+    - role: fuseki
+      fuseki_configurations:
+        - name: "test-db"

@@ -25,7 +25,7 @@
     dest: "{{ fuseki_workspace }}/{{ item.item }}-{{fuseki_version }}.tar.gz"
     force: no
   with_items: "{{ fuseki_install_status.results }}"
-  when: "{{ item.stat.isdir is not defined }}"
+  when: item.stat.isdir is not defined
   register: fuseki_download_status
 
 - name: Expand Fuseki and Jena.
@@ -34,7 +34,7 @@
     dest: "{{ fuseki_install_dir }}"
     copy: no
   with_items: "{{ fuseki_download_status.results }}"
-  when: "{{ item.changed == true }}"
+  when: item.changed == true
 
 - name: Delete Fuseki and Jena downloads.
   file:
