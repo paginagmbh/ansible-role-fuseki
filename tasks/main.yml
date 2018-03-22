@@ -93,3 +93,13 @@
     state: "{{ fuseki_service_state }}"
     enabled: yes
   when: fuseki_service_manage
+
+- name: Allow fuseki user to stop/start the service
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    line: "{{ item }}"
+    validate: visudo -cf %s
+  with_items:
+    - "{{ fuseki_user }} ALL=NOPASSWD: /bin/systemctl stop fuseki.service"
+    - "{{ fuseki_user }} ALL=NOPASSWD: /bin/systemctl start fuseki.service"
