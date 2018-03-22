@@ -9,6 +9,7 @@
   user:
     name: "{{ fuseki_user }}"
     group: "{{ fuseki_user }}"
+    groups: "www-data"
     shell: "/bin/bash"
     state: present
   when: fuseki_create_user
