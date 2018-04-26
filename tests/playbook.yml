@@ -8,6 +8,13 @@
     - setup: # aka gather_facts
   roles:
     - role: geerlingguy.java
+      java_packages:
+        - "java-1.8.0-openjdk"
+      when: ansible_os_family == 'RedHat'
+
+    - role: geerlingguy.java
+      when: ansible_os_family == 'Debian'
+
     - role: fuseki
       fuseki_configurations:
         - name: "test-db"

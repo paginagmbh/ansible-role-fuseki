@@ -9,7 +9,6 @@
   user:
     name: "{{ fuseki_user }}"
     group: "{{ fuseki_user }}"
-    groups: "www-data"
     shell: "/bin/bash"
     state: present
   when: fuseki_create_user
@@ -80,13 +79,21 @@
   with_items: "{{ fuseki_configurations }}"
   notify: restart fuseki
 
-- name: Copy Fuseki systemd unit file into place.
+- name: Copy Fuseki systemd unit file into place (Debian).
   template:
     src: fuseki.unit.j2
     dest: /etc/systemd/system/fuseki.service
     owner: root
     group: root
     mode: 0755
+  when: ansible_os_family == 'Debian'
+
+- name: Link Fuseki service script into /etc/init.d (Redhat).
+  file:
+    src: "{{ fuseki_service_script }}"
+    dest: /etc/init.d/fuseki
+    state: link
+  when: ansible_os_family == 'RedHat'
 
 - name: Ensure Fuseki is started and enabled on boot if configured.
   service:
