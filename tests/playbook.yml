@@ -18,3 +18,5 @@
     - role: fuseki
       fuseki_configurations:
         - name: "test-db"
+          read_write: true
+          union_default_graph: false
