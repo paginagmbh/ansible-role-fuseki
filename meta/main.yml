@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: fuseki
   author: paginagmbh
   description: Apache Jena/Fuseki SPARQL Server
   company: Pagina GmbH
