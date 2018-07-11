@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/paginagmbh/ansible-role-fuseki.svg?branch=master)](https://travis-ci.org/paginagmbh/ansible-role-fuseki)
 
-An Ansible Role that installs [Apache
-Jena/Fuseki](https://jena.apache.org/documentation/fuseki2/) on Linux.
+An Ansible Role that installs
+[Apache Jena/Fuseki](https://jena.apache.org/documentation/fuseki2/) on Linux.
 
 ## Requirements
 
@@ -13,7 +13,7 @@ A Java runtime has to be installed on the target host.
 
 ``` yaml
 - role: geerlingguy.java
-- role: paginagmbh.fuseki
+- role: gremid.fuseki
   fuseki_configurations:
     - name: "test-db"
       read_write: True
@@ -44,5 +44,5 @@ BSD
 This role was created in 2018 by [Pagina GmbH](https://www.pagina.gmbh/).
 
 It draws heavily from best practices as demonstrated in roles authored
-by [Jeff Geerling](https://www.jeffgeerling.com/), author of [Ansible
-for DevOps](https://www.ansiblefordevops.com/).
+by [Jeff Geerling](https://www.jeffgeerling.com/), author of
+[Ansible for DevOps](https://www.ansiblefordevops.com/).
