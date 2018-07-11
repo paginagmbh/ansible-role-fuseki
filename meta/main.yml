@@ -12,5 +12,10 @@ galaxy_info:
     - name: EL
       versions:
         - 7
-  galaxy_tags: []
+  galaxy_tags:
+    - database
+    - web
+    - nosql
+    - semantic
+    - rdf
 dependencies: []
