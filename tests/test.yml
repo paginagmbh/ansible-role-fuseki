@@ -1,5 +1,15 @@
 ---
 - hosts: localhost
   remote_user: root
+  vars:
+    fuseki_configurations:
+      - name: "test-db"
+        read_write: true
+        union_default_graph: false
+  pre_tasks:
+    - set_fact:
+        java_packages: ["java-1.8.0-openjdk"]
+      when: ansible_os_family == 'RedHat'
   roles:
-    - ansible-role-fuseki
+    - role: geerlingguy.java
+    - role: role_under_test
