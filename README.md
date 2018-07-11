@@ -1,5 +1,7 @@
 # Ansible Role: Apache Jena/Fuseki SPARQL Server
 
+[![Build Status](https://travis-ci.org/paginagmbh/ansible-role-fuseki.svg?branch=master)](https://travis-ci.org/paginagmbh/ansible-role-fuseki)
+
 An Ansible Role that installs [Apache
 Jena/Fuseki](https://jena.apache.org/documentation/fuseki2/) on Linux.
 
